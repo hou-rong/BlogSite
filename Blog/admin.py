@@ -13,6 +13,7 @@ def getShortUrl():
 
 
 class BlogAdmin(admin.ModelAdmin):
+    list_per_page = 8
     list_display = ('title', 'updateTime', 'createTime', 'shortUrl', 'accessCount')
     search_fields = ('title', 'body')
     fieldsets = (
