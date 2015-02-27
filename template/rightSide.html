@@ -1,0 +1,43 @@
+<div class="col-md-3" role="complementary">
+    <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
+        <ul class="nav bs-docs-sidenav">
+            <!-- todo change the list of right side -->
+            <li><a>{# right list #}</a></li>
+            <li><h2>Search</h2></li>
+            <li>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Go!</button>
+                            </span>
+                </div>
+            </li>
+            <li><h2>Language</h2></li>
+            <li><a href="#">正體中文</a></li>
+            <li><a href="#">簡體中文</a></li>
+            <li><a href="#">English</a></li>
+            <!-- todo use OpenCC and Google Translator to change the language -->
+            <li><h2>Categorys</h2></li>
+
+            {% for category in categorys %}
+                <li><a href="#">{{ category.title }}</a></li>
+                <!-- todo write a category url -->
+                <!-- todo show passages number in category -->
+            {% endfor %}
+
+            <li><h2>Hot</h2></li>
+            {% for hotPassage in hotPassages %}
+                <li>
+                    <a href="{% url 'archive' shortUrl=hotPassage.shortUrl %}">{{ hotPassage.title }}({{ hotPassage.accessCount }})</a>
+                </li>
+                <!-- todo write url of hotPassage -->
+            {% endfor %}
+            <li><h2>Time Machine</h2></li>
+            <!-- todo write a time rank page -->
+        </ul>
+        <a class="back-to-top" href="#top">
+            返回顶部
+        </a>
+
+    </nav>
+</div>

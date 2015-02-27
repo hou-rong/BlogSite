@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+    {# left side #}
+    <div class="col-md-9" role="main">
+        {% for post in posts %}
+            <div class="row">
+                <div class="col-md-2" role="complementary">
+                    <nav class="visible-lg-inline-block">
+                        <div class="title">
+                            <!-- todo create a timer -->
+                            <br/>
+                            <br/>
+                            <br/>
+                            <span>Year:{{ post.createTime|date:"Y" }}</span>
+                            <span>Month:{{ post.createTime|date:"F" }}</span>
+                            <span>Day:{{ post.createTime|date:"d" }}</span>
+                            <span>Author:</span>
+                            <span>Read:{{ post.accessCount }}</span>
+                            <!-- todo get tags by results of textRank -->
+                            <li><a href="">asdfa</a></li>
+                            <li><a href="">l</a></li>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-md-10" role="main">
+                    {# content pages #}
+                    <div class="title"><a href="{% url 'archive' shortUrl=post.shortUrl %}">
+                        <!-- todo make url list to passage -->
+                        <h1>{{ post.title }}</h1>
+                    </a></div>
+                    <nav class="hidden-lg"><p>
+                        創建時間：{{ post.createTime }}
+                        修改時間：{{ post.updateTime }}
+                        <!-- todo include timer read author -->
+                    </p></nav>
+                    <p>{{ post.body }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% block rightSide %}
+        {% include "rightSide.html" %}
+    {% endblock %}
+{% endblock %}

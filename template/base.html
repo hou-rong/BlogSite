@@ -27,6 +27,7 @@
     <!-- left list -->
 
     <style type="text/css">
+        /* title style */
         .title span {
             color: #878787;
         }
@@ -91,6 +92,7 @@
     <link rel="icon" href="http://v3.bootcss.com/favicon.ico">
 
 </head>
+
 <body onload="prettyPrint()">
 <a id="skippy" class="sr-only sr-only-focusable" href="#content">
     <div class="container"><span class="skiplink-text">Skip to main content</span></div>
@@ -112,7 +114,7 @@
         <nav style="height: 1px;" aria-expanded="false" class="navbar-collapse bs-navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="http://v3.bootcss.com/getting-started/">Home</a>
+                    <a href="{% url 'home' %}">Home</a>
                 </li>
                 <li>
                     <a href="http://v3.bootcss.com/css/">Archive</a>
@@ -139,222 +141,9 @@
     </div>
 </div>
 <div class="container bs-docs-container">
-<!-- todo create a timer -->
     <div class="row">
-        <div class="col-md-1" role="complementary">
-            <nav class="visible-lg-inline-block">
-                <div class="title">
-                    include time
-                    <span>Author:</span>
-                    <span>Read:</span>
-                    <!-- todo get tags by results of textRank -->
-                    <li><a href="">asdfa</a></li>
-                    <li><a href="">sdf</a></li>
-                    <li><a href="">ff</a></li>
-                    <li><a href="">assdfasdf</a></li>
-                    <li><a href="">sdfsdf</a></li>
-                    <li><a href="">j</a></li>
-                    <li><a href="">k</a></li>
-                    <li><a href="">l</a></li>
-                </div>
-            </nav>
-        </div>
-        <div class="col-md-8" role="main">
-            {# content pages #}
-            <div class="title"><a href="http://www.baidu.com">
-                <h1>Hello World</h1>
-            </a></div>
-            <p>Hello World</p>
-            <nav class="hidden-lg"><p>
-                This can only be seen in small screen
-                <!-- todo include timer read author -->
-            </p></nav>
-
-
-            <div class="bs-callout bs-callout-warning" id="jquery-required">
-                <h4>Bootstrap 插件全部依赖 jQuery</h4>
-
-                <p>请注意，<strong>Bootstrap 的所有 JavaScript 插件都依赖 jQuery，</strong>因此 jQuery 必须在 Bootstrap 之前引入，就像在<a
-                        href="#template">基本模版</a>中所展示的一样。在<a
-                        href="https://github.com/twbs/bootstrap/blob/v3.3.2/bower.json"> <code>bower.json</code> 文件中</a>
-                    列出了 Bootstrap 所支持的 jQuery 版本。</p>
-            </div>
-
-
-            <div class="bs-callout bs-callout-info" id="callout-type-b-i-elems">
-                <h4>Alternate elements</h4>
-
-                <p>在 HTML5 中可以放心使用 <code>&lt;b&gt;</code> 和 <code>&lt;i&gt;</code> 标签。<code>&lt;b&gt;</code>
-                    用于高亮单词或短语，不带有任何着重的意味；而 <code>&lt;i&gt;</code> 标签主要用于发言、技术词汇等。</p>
-            </div>
-
-            <blockquote>
-                <p>“不要在处理静态资源上使用 nodejs ”—— <a href="https://twitter.com/trevnorris" target="_blank">@trevnorris</a>。如果你的
-                    node 服务器没有 nginx 作为前端服务器，那么你很可能正在做着错误的事。
-                </p>
-
-                <p class="text-right">——<a href="https://twitter.com/nebrius" target="_blank">Bryan Hughes
-                    (@nebrius)</a></p>
-            </blockquote>
-                <pre><code>
-                    from django.shortcuts import render
-
-
-                    def test(request):
-                    return render(request, 'test.html')
-
-
-                    def home(request):
-                    pass
-
-
-                    def rank(request):
-                    pass
-
-
-                    def about(request):
-                    pass
-
-
-                    def archive(request):
-                    pass
-
-                </code></pre>
-                <pre><code>
-                    location /content/images {
-                    alias /path/to/ghost/content/images;
-                    access_log off;
-                    expires max;
-                    }
-
-                    location /assets {
-                    alias /path/to/ghost/content/themes/(theme-name)/assets;
-                    access_log off;
-                    expires max;
-                    }
-
-                    location /public {
-                    alias /path/to/ghost/core/built/public;
-                    access_log off;
-                    expires max;
-                    }
-
-                    location /ghost/scripts {
-                    alias /path/to/ghost/core/built/scripts;
-                    access_log off;
-                    expires max;
-                    }
-                </code></pre>
-
-            <pre><code>
-                #demo {
-                animation-iteration-count: 2;
-                animation-duration: 3s;
-                }
-            </code></pre>
-        </div>
-
-        <div class="col-md-3" role="complementary">
-            <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
-                <ul class="nav bs-docs-sidenav">
-                    <!-- todo change the list of right side -->
-                    <li><a>{# right list #}</a></li>
-                    <li><h2>Search</h2></li>
-                    <li>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for...">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Go!</button>
-                            </span>
-                        </div>
-                    </li>
-                    <li><a href="#">Hello World</a></li>
-                    <li><h2>Hello World</h2></li>
-                    <li>
-                        <a href="#download">下载</a>
-                    </li>
-                    <li>
-                        <a href="#whats-included">包含的内容</a>
-                        <ul class="nav">
-                            <li><a href="#whats-included-precompiled">预编译版</a></li>
-                            <li><a href="#whats-included-source">Bootstrap 源码</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#grunt">编译 CSS 和 JavaScript 文件</a>
-                        <ul class="nav">
-                            <li><a href="#grunt-installing">安装 Grunt</a></li>
-                            <li><a href="#grunt-commands">可以使用的 Grunt 命令</a></li>
-                            <li><a href="#grunt-troubleshooting">除错</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#template">基本模板</a>
-                    </li>
-                    <li>
-                        <a href="#examples">实例精选</a>
-                        <ul class="nav">
-                            <li><a href="#examples-framework">Bootstrap 框架的基本用法</a></li>
-                            <li><a href="#examples-navbars">导航条实战</a></li>
-                            <li><a href="#examples-custom">自定义组件</a></li>
-                            <li><a href="#examples-experiments">Experiments</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#tools">工具</a>
-                        <ul class="nav">
-                            <li><a href="#tools-bootlint">Bootlint</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#community">社区</a>
-                    </li>
-                    <li>
-                        <a href="#disable-responsive">禁止响应式布局</a>
-                    </li>
-                    <li>
-                        <a href="#migration">从 2.x 版本升级到 3.0 版本</a>
-                    </li>
-                    <li>
-                        <a href="#support">对浏览器和设备的支持情况</a>
-                        <ul class="nav">
-                            <li><a href="#support-browsers">被支持的浏览器</a></li>
-                            <li><a href="#support-ie8-ie9">Internet Explorer 8-9</a></li>
-                            <li><a href="#support-ie8-respondjs">IE8 与 Respond.js</a></li>
-                            <li><a href="#support-ie8-box-sizing">IE8 与 box-sizing 属性</a></li>
-                            <li><a href="#support-ie8-font-face">IE8 and @font-face</a></li>
-                            <li><a href="#support-ie-compatibility-modes">IE 兼容模式</a></li>
-                            <li><a href="#support-chinese-browsers-renderer-modes">国产浏览器高速模式</a></li>
-                            <li><a href="#support-ie10-width">IE10 和 Windows (Phone) 8</a></li>
-                            <li><a href="#support-safari-percentages">Safari 对百分比数字凑整的问题</a></li>
-                            <li><a href="#support-fixed-position-keyboards">模态框、导航条和虚拟键盘</a></li>
-                            <li><a href="#support-browser-zooming">浏览器的缩放功能</a></li>
-                            <li><a href="#support-printing">打印</a></li>
-                            <li><a href="#support-android-stock-browser">Android stock browser</a></li>
-                            <li><a href="#support-validators">Validators</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#third-parties">对第三方组件的支持</a>
-                    </li>
-                    <li>
-                        <a href="#accessibility">可访问性</a>
-                    </li>
-                    <li>
-                        <a href="#license-faqs">许可证 FAQ</a>
-                    </li>
-                    <li>
-                        <a href="#translations">文档翻译</a>
-                    </li>
-
-
-                </ul>
-                <a class="back-to-top" href="#top">
-                    返回顶部
-                </a>
-
-            </nav>
-        </div>
+        {% block content %}
+        {% endblock %}
     </div>
 </div>
 
