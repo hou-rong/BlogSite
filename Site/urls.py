@@ -8,5 +8,6 @@ urlpatterns = patterns('',
 
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^archive/(?P<shortUrl>\w+)/', 'Blog.views.archive', name='archive'),
+                       url(r'^search/', 'Blog.views.search', name='search'),
                        url(r'^$', 'Blog.views.home', name='home'),
 )

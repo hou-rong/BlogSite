@@ -6,10 +6,13 @@
             <li><h2>Search</h2></li>
             <li>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
+                    <form action="{% url 'search' %}" method="post">
+                        {% csrf_token %}
+                        <input type="text" class="form-control" name="query" placeholder="Search for...">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">Go!</button>
+                                <button class="btn btn-default" type="submit">Go!</button>
                             </span>
+                    </form>
                 </div>
             </li>
             <li><h2>Language</h2></li>
@@ -20,7 +23,7 @@
             <li><h2>Categorys</h2></li>
 
             {% for category in categorys %}
-                <li><a href="#">{{ category.title }}</a></li>
+                <li><a href="#">{{ category.title }}()</a></li>
                 <!-- todo write a category url -->
                 <!-- todo show passages number in category -->
             {% endfor %}

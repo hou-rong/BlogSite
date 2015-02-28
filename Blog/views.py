@@ -1,5 +1,9 @@
 from django.shortcuts import (render, get_object_or_404, get_list_or_404)
 from Blog.models import *
+import functools
+from django.db.models import Q
+import operator
+import jieba.analyse
 
 
 def home(request):
@@ -28,8 +32,20 @@ def archive(request, shortUrl):
 
 
 def search(request):
-    pass
+    query = request.POST['query']
+    keys = jieba.analyse.extract_tags(query, len(query))
+    if not keys:
+        keys = query.split()
+    titleCondition = functools.reduce(operator.and_, (Q(title__icontains=x) for x in keys))
+    bodyCondition = functools.reduce(operator.and_, (Q(body__icontains=x) for x in keys))
+    posts = (Blog.objects.filter(titleCondition) or Blog.objects.filter(bodyCondition)).order_by('updateTime')
+    # todo order by key word rank
+    categorys = Category.objects.all()
+    hotPassages = Blog.objects.order_by('-accessCount')[:10]
+    keyRank = '>'.join(keys)
+    timeMachine = Blog.objects
+    return render(request, 'search.html',
+                  {'posts': posts, 'categorys': categorys, 'hotPassages': hotPassages, 'keyRank': keyRank})
 
 
-# todo create python function to complate the page automaticly
 # todo create <pre><code></code></pre> label to let highlight.js work
