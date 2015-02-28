@@ -11,7 +11,8 @@ def home(request):
     categorys = Category.objects.all()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
     timeMachine = Blog.objects
-    return render(request, 'home.html', {'posts': posts, 'categorys': categorys, 'hotPassages': hotPassages})
+    return render(request, 'home.html', {'posts': posts, 'categorys': categorys,
+                                         'hotPassages': hotPassages})
 
 
 def rank(request):
@@ -38,14 +39,26 @@ def search(request):
         keys = query.split()
     titleCondition = functools.reduce(operator.and_, (Q(title__icontains=x) for x in keys))
     bodyCondition = functools.reduce(operator.and_, (Q(body__icontains=x) for x in keys))
-    posts = (Blog.objects.filter(titleCondition) or Blog.objects.filter(bodyCondition)).order_by('updateTime')
+    posts = (Blog.objects.filter(titleCondition) or Blog.objects.filter(bodyCondition)).order_by('-updateTime')
     # todo order by key word rank
     categorys = Category.objects.all()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
     keyRank = '>'.join(keys)
     timeMachine = Blog.objects
     return render(request, 'search.html',
-                  {'posts': posts, 'categorys': categorys, 'hotPassages': hotPassages, 'keyRank': keyRank})
+                  {'posts': posts, 'categorys': categorys, 'hotPassages': hotPassages,
+                   'keyRank': keyRank})
 
+
+def category(request, shortUrl):
+    posts = get_list_or_404(Blog.objects.order_by('-updateTime'),
+                            category__in=Category.objects.filter(shortUrl=shortUrl))
+    title = Category.objects.filter(shortUrl=shortUrl).values('title')[0]['title']
+    categorys = Category.objects.all()
+    hotPassages = Blog.objects.order_by('-accessCount')[:10]
+    timeMachine = Blog.objects
+    return render(request, 'category.html', {'posts': posts, 'categorys': categorys,
+                                         'hotPassages': hotPassages, 'title':title})
 
 # todo create <pre><code></code></pre> label to let highlight.js work
+# todo create page changing function

@@ -3,10 +3,10 @@ from .models import *
 import uuid
 
 
-def getShortUrl():
+def getShortUrl(Class):
     shortUrl = str(uuid.uuid4()).replace('-', '')[:10]
     try:
-        Blog.objects.get(shortUrl=shortUrl)
+        Class.objects.get(shortUrl=shortUrl)
         getShortUrl()
     except:
         return shortUrl
@@ -27,11 +27,24 @@ class BlogAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        obj.shortUrl = getShortUrl()
+        obj.shortUrl = getShortUrl(Blog)
         obj.save()
 
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'shortUrl',)
+    fieldsets = (
+        (None, {
+            'fields': ('title',),
+        }),
+    )
+
+    def save_model(self, request, obj, form, change):
+        obj.shortUrl = getShortUrl(Category)
+        obj.save()
+
+
 # todo create tags by textRank
-# todo jieba can't use in python3
 # todo remove code in fields to make it can use textRank
 # todo use openCC to change language in blog
 
@@ -44,6 +57,6 @@ class BlogAdmin(admin.ModelAdmin):
 
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Tag)
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 
 # todo create a beautiful admin page

@@ -1,7 +1,6 @@
 <div class="col-md-3" role="complementary">
     <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix-top">
         <ul class="nav bs-docs-sidenav">
-            <!-- todo change the list of right side -->
             <li><a>{# right list #}</a></li>
             <li><h2>Search</h2></li>
             <li>
@@ -23,8 +22,7 @@
             <li><h2>Categorys</h2></li>
 
             {% for category in categorys %}
-                <li><a href="#">{{ category.title }}()</a></li>
-                <!-- todo write a category url -->
+                <li><a href="{% url 'category' shortUrl=category.shortUrl %}">{{ category.title }}()</a></li>
                 <!-- todo show passages number in category -->
             {% endfor %}
 
@@ -33,7 +31,6 @@
                 <li>
                     <a href="{% url 'archive' shortUrl=hotPassage.shortUrl %}">{{ hotPassage.title }}({{ hotPassage.accessCount }})</a>
                 </li>
-                <!-- todo write url of hotPassage -->
             {% endfor %}
             <li><h2>Time Machine</h2></li>
             <!-- todo write a time rank page -->
