@@ -66,7 +66,9 @@ def getCategorysAndNumber():
     for i in Category.objects.all():
         showCategorys.append({'title': i.title, 'number': Blog.objects.filter(
             category__in=Category.objects.filter(title=i.title)).count(), 'shortUrl': i.shortUrl})
+    showCategorys.sort(key=lambda x: x['number'], reverse=True)
     return showCategorys
+
 
 # todo create <pre><code></code></pre> label to let highlight.js work
 # todo create page changing function
