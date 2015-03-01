@@ -8,7 +8,7 @@ import jieba.analyse
 
 def home(request):
     posts = Blog.objects.order_by('-updateTime')
-    categorys = Category.objects.all()
+    categorys = getCategorysAndNumber()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
     timeMachine = Blog.objects
     return render(request, 'home.html', {'posts': posts, 'categorys': categorys,
@@ -27,7 +27,7 @@ def archive(request, shortUrl):
     post = get_object_or_404(Blog, shortUrl=shortUrl)
     post.accessCount += 1
     post.save()
-    categorys = Category.objects.all()
+    categorys = getCategorysAndNumber()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
     return render(request, 'archive.html', {'post': post, 'categorys': categorys, 'hotPassages': hotPassages})
 
@@ -41,7 +41,7 @@ def search(request):
     bodyCondition = functools.reduce(operator.and_, (Q(body__icontains=x) for x in keys))
     posts = (Blog.objects.filter(titleCondition) or Blog.objects.filter(bodyCondition)).order_by('-updateTime')
     # todo order by key word rank
-    categorys = Category.objects.all()
+    categorys = getCategorysAndNumber()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
     keyRank = '>'.join(keys)
     timeMachine = Blog.objects
@@ -54,11 +54,20 @@ def category(request, shortUrl):
     posts = get_list_or_404(Blog.objects.order_by('-updateTime'),
                             category__in=Category.objects.filter(shortUrl=shortUrl))
     title = Category.objects.filter(shortUrl=shortUrl).values('title')[0]['title']
-    categorys = Category.objects.all()
+    categorys = getCategorysAndNumber()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
     timeMachine = Blog.objects
     return render(request, 'category.html', {'posts': posts, 'categorys': categorys,
-                                         'hotPassages': hotPassages, 'title':title})
+                                             'hotPassages': hotPassages, 'title': title})
+
+
+def getCategorysAndNumber():
+    showCategorys = []
+    for i in Category.objects.all():
+        showCategorys.append({'title': i.title, 'number': Blog.objects.filter(
+            category__in=Category.objects.filter(title=i.title)).count(), 'shortUrl': i.shortUrl})
+    return showCategorys
 
 # todo create <pre><code></code></pre> label to let highlight.js work
 # todo create page changing function
+# todo getCategorysAndNumber could be replace by a simple way

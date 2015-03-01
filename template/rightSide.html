@@ -22,8 +22,7 @@
             <li><h2>Categorys</h2></li>
 
             {% for category in categorys %}
-                <li><a href="{% url 'category' shortUrl=category.shortUrl %}">{{ category.title }}()</a></li>
-                <!-- todo show passages number in category -->
+                <li><a href="{% url 'category' shortUrl=category.shortUrl %}">{{ category.title }}({{ category.number }})</a></li>
             {% endfor %}
 
             <li><h2>Hot</h2></li>
