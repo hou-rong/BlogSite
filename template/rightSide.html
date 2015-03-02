@@ -22,7 +22,8 @@
             <li><h2>Categorys</h2></li>
 
             {% for category in categorys %}
-                <li><a href="{% url 'category' shortUrl=category.shortUrl %}">{{ category.title }}({{ category.number }})</a></li>
+                <li><a href="{% url 'category' shortUrl=category.shortUrl %}">{{ category.title }}({{ category.number }})</a>
+                </li>
             {% endfor %}
 
             <li><h2>Hot</h2></li>
@@ -32,7 +33,11 @@
                 </li>
             {% endfor %}
             <li><h2>Time Machine</h2></li>
-            <!-- todo write a time rank page -->
+            {% for timeMachine in timeMachines %}
+                <li>
+                    <a href="{% url 'timeMachine' year=timeMachine.year month=timeMachine.month %}">{{ timeMachine.title }}({{ timeMachine.number }})</a>
+                </li>
+            {% endfor %}
         </ul>
         <a class="back-to-top" href="#top">
             返回顶部

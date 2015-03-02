@@ -10,9 +10,9 @@ def home(request):
     posts = Blog.objects.order_by('-updateTime')
     categorys = getCategorysAndNumber()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
-    timeMachine = Blog.objects
+    timeMachines = getTimeMachines()
     return render(request, 'home.html', {'posts': posts, 'categorys': categorys,
-                                         'hotPassages': hotPassages})
+                                         'hotPassages': hotPassages, 'timeMachines': timeMachines})
 
 
 def rank(request):
@@ -29,7 +29,9 @@ def archive(request, shortUrl):
     post.save()
     categorys = getCategorysAndNumber()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
-    return render(request, 'archive.html', {'post': post, 'categorys': categorys, 'hotPassages': hotPassages})
+    timeMachines = getTimeMachines()
+    return render(request, 'archive.html',
+                  {'post': post, 'categorys': categorys, 'hotPassages': hotPassages, 'timeMachines': getTimeMachines()})
 
 
 def search(request):
@@ -44,10 +46,10 @@ def search(request):
     categorys = getCategorysAndNumber()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
     keyRank = '>'.join(keys)
-    timeMachine = Blog.objects
+    timeMachines = getTimeMachines()
     return render(request, 'search.html',
                   {'posts': posts, 'categorys': categorys, 'hotPassages': hotPassages,
-                   'keyRank': keyRank})
+                   'keyRank': keyRank, 'timeMachines': timeMachines})
 
 
 def category(request, shortUrl):
@@ -56,9 +58,18 @@ def category(request, shortUrl):
     title = Category.objects.filter(shortUrl=shortUrl).values('title')[0]['title']
     categorys = getCategorysAndNumber()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
-    timeMachine = Blog.objects
+    timeMachines = getTimeMachines()
     return render(request, 'category.html', {'posts': posts, 'categorys': categorys,
-                                             'hotPassages': hotPassages, 'title': title})
+                                             'hotPassages': hotPassages, 'title': title, 'timeMachines': timeMachines})
+
+
+def timeMachine(request, year, month):
+    posts = get_list_or_404(Blog.objects.order_by('-updateTime'), createTime__year=year, createTime__month=month)
+    categorys = getCategorysAndNumber()
+    hotPassages = Blog.objects.order_by('-accessCount')[:10]
+    timeMachines = getTimeMachines()
+    return render(request, 'home.html', {'posts': posts, 'categorys': categorys,
+                                         'hotPassages': hotPassages, 'timeMachines': timeMachines})
 
 
 def getCategorysAndNumber():
@@ -70,6 +81,27 @@ def getCategorysAndNumber():
     return showCategorys
 
 
-# todo create <pre><code></code></pre> label to let highlight.js work
-# todo create page changing function
-# todo getCategorysAndNumber could be replace by a simple way
+def getTimeMachines():
+    # get temporary dictionary
+    temporaryTimeMachines = {}
+    for i in Blog.objects.all():
+        key = (i.createTime.year, i.createTime.month)
+        if key not in temporaryTimeMachines:
+            temporaryTimeMachines.update({key: 1})
+        else:
+            temporaryTimeMachines[key] += 1
+
+    # format dictionary
+    timeMachines = []
+    for i in temporaryTimeMachines.keys():
+        timeMachines.append(
+            {'title': "%s年%s月" % (i[0], i[1]), 'number': temporaryTimeMachines[i], 'year': i[0],
+             'month': i[1]})
+    return timeMachines
+
+    # 用字典表示，如果字典中有該名字的鍵值，數量加一，如果該字典里沒有該鍵值，創造該鍵，數量爲一
+
+
+    # todo create <pre><code></code></pre> label to let highlight.js work
+    # todo create page changing function
+    # todo getCategorysAndNumber could be replace by a simple way
