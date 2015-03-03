@@ -6,6 +6,7 @@ class Tag(models.Model):
     標籤，多對多分類，多選
     '''
     title = models.CharField('標籤', max_length=30, unique=True)
+    shortUrl = models.CharField('短Url', max_length=150, unique=True, null=False, blank=False, editable=False)
 
     def __str__(self):
         return self.title
@@ -36,7 +37,7 @@ class Blog(models.Model):
     accessCount = models.IntegerField("瀏覽量", default=1, editable=False)
     category = models.ForeignKey('Category', verbose_name="分類集合", related_name='category')
     shortUrl = models.CharField("短URL", max_length=150, unique=True, null=False, blank=False, editable=False)
-    tags = models.ManyToManyField('Tag', verbose_name="標籤集合", null=True)
+    tags = models.ManyToManyField('Tag', verbose_name="標籤集合", null=True, editable=False)
     tags.help_text = '標籤集合'
 
     def __str__(self):

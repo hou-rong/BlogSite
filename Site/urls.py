@@ -10,6 +10,7 @@ urlpatterns = patterns('',
                        url(r'^archive/(?P<shortUrl>\w+)/', 'Blog.views.archive', name='archive'),
                        url(r'^search/', 'Blog.views.search', name='search'),
                        url(r'^category/(?P<shortUrl>\w+)/', 'Blog.views.category', name='category'),
-                       url(r'^timeMachine/(?P<year>\w+)/(?P<month>\w+)', 'Blog.views.timeMachine', name='timeMachine'),
+                       url(r'^tagView/(?P<shortUrl>\w+)/', 'Blog.views.tagView', name='tagView'),
+                       url(r'^timeMachine/(?P<year>\w+)/(?P<month>\w+)/', 'Blog.views.timeMachine', name='timeMachine'),
                        url(r'^$', 'Blog.views.home', name='home'),
 )

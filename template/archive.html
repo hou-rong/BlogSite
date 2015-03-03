@@ -15,9 +15,9 @@
                         <span>Day:{{ post.createTime|date:"d" }}</span>
                         <span>Author:</span>
                         <span>Read:{{ post.accessCount }}</span>
-                        <!-- todo get tags by results of textRank -->
-                        <li><a href="">asdfa</a></li>
-                        <li><a href="">l</a></li>
+                        {% for tag in post.tags.all %}
+                            <li><a href="{% url 'tagView' shortUrl=tag.shortUrl %}">{{ tag.title }}</a></li>
+                        {% endfor %}
                     </div>
                 </nav>
             </div>

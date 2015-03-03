@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 import uuid
+import jieba.analyse
 
 
 def getShortUrl(Class):
@@ -20,14 +21,23 @@ class BlogAdmin(admin.ModelAdmin):
         (None, {
             'fields': (('title', 'category', ), 'body',),
         }),
-        ('Advanced options', {
-            'classes': ('Blog', ),
-            'fields': ('tags', ),
-        }),
     )
 
     def save_model(self, request, obj, form, change):
         obj.shortUrl = getShortUrl(Blog)
+        obj.save()
+        title = obj.title
+        body = request.POST['body']
+        a = Blog.objects.get(title=title)
+        a.tags.clear()
+        keyWords = jieba.analyse.extract_tags(body, int(len(body) / 150))
+        for i in keyWords:
+            try:
+                tag = Tag.objects.get(title=i)
+            except:
+                tag = Tag(title=i, shortUrl=getShortUrl(Tag))
+                tag.save()
+            a.tags.add(tag)
         obj.save()
 
 
@@ -44,8 +54,19 @@ class CategoryAdmin(admin.ModelAdmin):
         obj.save()
 
 
-# todo create tags by textRank
-# todo remove code in fields to make it can use textRank
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('title', 'shortUrl',)
+    fieldsets = (
+        (None, {
+            'fields': ('title',),
+        }),
+    )
+
+    def save_model(self, request, obj, form, change):
+        obj.shortUrl = getShortUrl(Tag)
+        obj.save()
+
+
 # todo use openCC to change language in blog
 
 # class BlogAdmin(admin.ModelAdmin):

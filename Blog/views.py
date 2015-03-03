@@ -31,7 +31,7 @@ def archive(request, shortUrl):
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
     timeMachines = getTimeMachines()
     return render(request, 'archive.html',
-                  {'post': post, 'categorys': categorys, 'hotPassages': hotPassages, 'timeMachines': getTimeMachines()})
+                  {'post': post, 'categorys': categorys, 'hotPassages': hotPassages, 'timeMachines': timeMachines})
 
 
 def search(request):
@@ -53,9 +53,8 @@ def search(request):
 
 
 def category(request, shortUrl):
-    posts = get_list_or_404(Blog.objects.order_by('-updateTime'),
-                            category__in=Category.objects.filter(shortUrl=shortUrl))
-    title = Category.objects.filter(shortUrl=shortUrl).values('title')[0]['title']
+    posts = Category.objects.get(shortUrl=shortUrl).category.order_by('-updateTime')
+    title = Category.objects.get(shortUrl=shortUrl).title
     categorys = getCategorysAndNumber()
     hotPassages = Blog.objects.order_by('-accessCount')[:10]
     timeMachines = getTimeMachines()
@@ -70,6 +69,16 @@ def timeMachine(request, year, month):
     timeMachines = getTimeMachines()
     return render(request, 'home.html', {'posts': posts, 'categorys': categorys,
                                          'hotPassages': hotPassages, 'timeMachines': timeMachines})
+
+
+def tagView(request, shortUrl):
+    posts = Tag.objects.get(shortUrl=shortUrl).blog_set.all()
+    title = Tag.objects.get(shortUrl=shortUrl).title
+    categorys = getCategorysAndNumber()
+    hotPassages = Blog.objects.order_by('-accessCount')[:10]
+    timeMachines = getTimeMachines()
+    return render(request, 'category.html', {'posts': posts, 'categorys': categorys,
+                                             'hotPassages': hotPassages, 'title': title, 'timeMachines': timeMachines})
 
 
 def getCategorysAndNumber():
