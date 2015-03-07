@@ -8,12 +8,13 @@
                     <nav class="visible-lg-inline-block">
                         <div class="title">
                             <!-- todo create a timer -->
-                            <br/>
-                            <br/>
-                            <br/>
-                            <span>Year:{{ post.createTime|date:"Y" }}</span>
-                            <span>Month:{{ post.createTime|date:"F" }}</span>
-                            <span>Day:{{ post.createTime|date:"d" }}</span>
+                            <aside class="entry-meta">
+                                <time datetime="2012-06-17T18:05:54.000Z" class="post-date">
+                                    <span class="post-month">{{ post.createTime|date:"F" }}</span>
+                                    <strong class="post-day">{{ post.createTime|date:"d" }}</strong>
+                                    <span class="post-year">{{ post.createTime|date:"Y" }}</span>
+                                </time>
+                            </aside>
                             <span>Author:</span>
                             <span>Read:{{ post.accessCount }}</span>
                             {% for tag in post.tags.all %}
