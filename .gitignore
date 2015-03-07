@@ -2,6 +2,6 @@ db.sqlite3
 template/test3.html
 template/test2.html
 template/test.html
-.idea/*
+.idea/
 
 *.pyc
