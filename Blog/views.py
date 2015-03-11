@@ -114,3 +114,4 @@ def getTimeMachines():
     # todo create <pre><code></code></pre> label to let highlight.js work
     # todo create page changing function
     # todo getCategorysAndNumber could be replace by a simple way
+    # todo get user who visit this blog recently and where he come from
